@@ -73,16 +73,16 @@ xmlhttp.onreadystatechange = function() {
 	for(var i=0; i<table.length;i++){
 		if(i==0){
 			var header = document.createElement('ul');
-			var pos = buildElement('li', 'pos.');
-			var club = buildElement('li', 'Club');
-			var matchesPlayed = buildElement('li', 'MP'); 
-			var matchWins = buildElement('li', 'W');
-			var matchDraws = buildElement('li', 'D');
-			var matchLosses = buildElement('li', 'L');
-			var gf = buildElement('li', 'GF');
-			var ga = buildElement('li', 'GA');
-			var gd = buildElement('li', 'GD');
-			var pts = buildElement('li', 'Pts.');
+			var pos = buildElement('li', 'pos.', 'Position');
+			var club = buildElement('li', 'Club', 'Club');
+			var matchesPlayed = buildElement('li', 'MP', 'Matches played'); 
+			var matchWins = buildElement('li', 'W', 'Wins');
+			var matchDraws = buildElement('li', 'D', 'Draws');
+			var matchLosses = buildElement('li', 'L', 'Losses');
+			var gf = buildElement('li', 'GF', 'Goals for');
+			var ga = buildElement('li', 'GA', 'Goals against');
+			var gd = buildElement('li', 'GD',  'Goal difference');
+			var pts = buildElement('li', 'Pts.', 'Points');
 			
 			header.appendChild(pos);
 			header.appendChild(club);
@@ -139,9 +139,10 @@ xmlhttp.onreadystatechange = function() {
 		}
 		container.appendChild(posI);
 	}
-	function buildElement(type, insideText){
+	function buildElement(type, insideText, titleValue=''){
 		var el = document.createElement(type);
 		el.innerText=insideText;
+		el.title=titleValue;
 		return el;
 	}
 }};
