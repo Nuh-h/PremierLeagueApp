@@ -125,9 +125,14 @@ xmlhttp.onreadystatechange = function() {
 		posI.appendChild(teamGD);
 		posI.appendChild(ptsAtI);
 		   
+		var selector = document.querySelector('select');
+		var selectedYear = selector.options[selector.selectedIndex].value;
+		selectedYear = parseInt(selectedYear.substring(0,4));
+		console.log(selectedYear);
+		
 		if(i<4){
 			posI.classList.add('first-4'); //Champions League slots
-		}else if(i<5){
+		}else if(i<5 || (i<6 && selectedYear<2018)){
 			posI.classList.add('first-6'); //Europa League slot
 		}else if(i+1>17){
 			posI.classList.add('last-3'); //Relegation zone
