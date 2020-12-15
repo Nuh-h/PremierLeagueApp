@@ -17,6 +17,10 @@ input, select, option {
     background:rgb(48 49 53);
     overflow:hidden;
 }
+.table-header{
+    background:#191911;
+    border-left:none;
+}
 ul{
     display:flex;
     padding-right:40px;
@@ -29,16 +33,23 @@ ul{
 }
 li {
     list-style-type:none;
-   
+    margin-left:auto;
+    display:flex;
+    justify-content:space-around;
+    width:5%;
 }
 li:first-of-type{
     padding-right:20px;
     display:flex;
     width:2%;
     justify-content:space-around;
+    margin-left:0;
+
 }
-.list-container ul li:last-of-type{
-    margin-left:auto;
+li:nth-of-type(2){
+    margin-left:0;
+    width:55%;
+    justify-content:left;
 }
 ul:hover{
     background:#636342;
