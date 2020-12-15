@@ -20,6 +20,7 @@ input, select, option {
 .table-header{
     background:#191911;
     border-left:none;
+    font-size:13px;
 }
 ul{
     display:flex;
@@ -63,4 +64,9 @@ ul:hover{
 }
 .last-3{
     border-left:4px solid #ff3600;
+}
+@media screen and (max-width:900px){
+    .table-header, li{
+        font-size:12px;
+    }
 }
