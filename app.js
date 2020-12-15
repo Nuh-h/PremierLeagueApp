@@ -8,6 +8,7 @@ xmlhttp.onreadystatechange = function() {
 	//form a dictionary to count total points for each team
     var teamsDict = {};
 	var teamsGA_GF = {}; //[goals conceded, goals scored]
+	var teamMatches = {}; //[matches played, wins, losses, draws]
     
     var container = document.querySelector('.list-container');
 	//setting the dictionary based on the JSON format for each year
@@ -23,22 +24,43 @@ xmlhttp.onreadystatechange = function() {
         if(!(match.team1 in teamsDict)){
 			teamsDict[match.team1]=0; 
 			teamsGA_GF[match.team1]=[0,0];
+			teamMatches[match.team1]=[0,0,0,0];
 		}
         if(!(match.team2 in teamsDict)){
 			teamsDict[match.team2]=0;
 			teamsGA_GF[match.team2]=[0,0];
+			teamMatches[match.team2]=[0,0,0,0];
 		}
         if(match.hasOwnProperty('score')){
-             const res = match.score.ft;
-             if(res[0]>res[1]){ teamsDict[match.team1]+=3; }
-             else if(res[1]>res[0]) {teamsDict[match.team2]+=3;}
-             else{ teamsDict[match.team1]++; teamsDict[match.team2]++;}
+            const res = match.score.ft;
+            if(res[0]>res[1]){
+				teamsDict[match.team1]+=3;
+				
+				teamMatches[match.team1][1]+=1;
+				teamMatches[match.team2][3]+=1;
+			}
+            else if(res[1]>res[0]){
+				teamsDict[match.team2]+=3;
+				
+				teamMatches[match.team2][1]+=1;
+				teamMatches[match.team1][3]+=1;
+			}
+            else{
+				teamsDict[match.team1]++;
+				teamsDict[match.team2]++;
+				
+				teamMatches[match.team1][2]+=1;
+				teamMatches[match.team2][2]+=1;
+			}
+			
+			teamMatches[match.team1][0]+=1;
+			teamMatches[match.team2][0]+=1;
+			
+			teamsGA_GF[match.team1][0]+=res[0];
+			teamsGA_GF[match.team1][1]+=res[1];
 			 
-			 teamsGA_GF[match.team1][0]+=res[0];
-			 teamsGA_GF[match.team1][1]+=res[1];
-			 
-			 teamsGA_GF[match.team2][0]+=res[1];
-			 teamsGA_GF[match.team2][1]+=res[0];
+			teamsGA_GF[match.team2][0]+=res[1];
+			teamsGA_GF[match.team2][1]+=res[0];
 			 
         }
 
@@ -53,6 +75,10 @@ xmlhttp.onreadystatechange = function() {
 			var header = document.createElement('ul');
 			var pos = buildElement('li', 'pos.');
 			var club = buildElement('li', 'Club');
+			var matchesPlayed = buildElement('li', 'MP'); 
+			var matchWins = buildElement('li', 'W');
+			var matchDraws = buildElement('li', 'D');
+			var matchLosses = buildElement('li', 'L');
 			var gf = buildElement('li', 'GF');
 			var ga = buildElement('li', 'GA');
 			var gd = buildElement('li', 'GD');
@@ -60,6 +86,10 @@ xmlhttp.onreadystatechange = function() {
 			
 			header.appendChild(pos);
 			header.appendChild(club);
+			header.appendChild(matchesPlayed);
+			header.appendChild(matchWins);
+			header.appendChild(matchDraws);
+			header.appendChild(matchLosses);
 			header.appendChild(gf);
 			header.appendChild(ga);
 			header.appendChild(gd);
@@ -71,9 +101,13 @@ xmlhttp.onreadystatechange = function() {
 			
 		}
 	    var posI = document.createElement('ul'); //position i of the table
-	    var teamAtI =buildElement('li', table[i][0]); //team at position i
+	    var posNum = buildElement('li', i+1); //position i value 
+		var teamAtI =buildElement('li', table[i][0]); //team at position i
+		var matchesPlayed = buildElement('li', teamMatches[table[i][0]][0]); 
+		var matchWins = buildElement('li', teamMatches[table[i][0]][1]);
+		var matchDraws = buildElement('li', teamMatches[table[i][0]][2]);
+		var matchLosses = buildElement('li', teamMatches[table[i][0]][3]);
 		var ptsAtI = buildElement('li', table[i][1]); //points of team at i
-		var posNum = buildElement('li', i+1); //position i value 
 		var teamGA = buildElement('li', teamsGA_GF[table[i][0]][1]); //goals conceded
 		var teamGF = buildElement('li', teamsGA_GF[table[i][0]][0]); //goals scored
 		
@@ -82,6 +116,10 @@ xmlhttp.onreadystatechange = function() {
 		
 		posI.appendChild(posNum);
 		posI.appendChild(teamAtI);
+		posI.appendChild(matchesPlayed);
+		posI.appendChild(matchWins);
+		posI.appendChild(matchDraws);
+		posI.appendChild(matchLosses);
 		posI.appendChild(teamGF);
 		posI.appendChild(teamGA);
 		posI.appendChild(teamGD);
