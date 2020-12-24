@@ -8,3 +8,5 @@ and does the maths as well as the sorting to produce the table, which can be com
 ~~The aim, however, is to do a little more maths with the data to fill the table with other important details. And make the options for selecting a season less hard-coded i.e. use JavaScript to display the options from an array.~~
 
 The site for this web app can be found [here](https://leaguetable.netlify.app).
+
+[lastest update] IDEAs to improve it: add option for other leagues, order by points then by goal difference then by alphabetical order (this can be done easily so long as I store the JSON data in a nice format, and then we can just populate the table).
